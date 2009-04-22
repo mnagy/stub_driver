@@ -1,0 +1,22 @@
+This is a simple stub driver for testing BIND dynamic back-ends.
+To use it, simply do:
+
+$ make
+$ su -c 'cp stub_driver.so* /usr/lib/'
+
+or
+
+$ su -c 'cp stub_driver.so* /usr/lib64/'
+
+Then, put something like this into your /etc/named.conf:
+
+dynamic-db "meh" {
+	library "stub_driver.so.1.0.0";
+	arg "first_arg 1 2 3 hello";
+	arg "second_arg meh";
+};
+
+The ``library'' statement points to the shared object that is the back-end.
+You can specify a full path instead, if you like.
+The ``arg'' statement provides an argument to the back-end. In case of the
+stub driver, it will only list them in the logs.
